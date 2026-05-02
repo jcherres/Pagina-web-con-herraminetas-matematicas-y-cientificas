@@ -38,24 +38,56 @@ with col_text:
 
 st.divider() # Una línea para separar
 
-st.markdown("<h3 style='color: #1E90FF;'> Fórmulas clave para progresiones aritméticas</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='color: #1E90FF;'>Fórmulas clave para progresiones aritméticas</h3>", unsafe_allow_html=True)
 
 col_f1, col_f2 = st.columns(2)
 
 with col_f1:
-    st.info("**Para hallar cualquier término ($a_n$):**")
+    st.info("**Término General ($a_n$):**")
     st.latex(r"a_n = a_1 + (n - 1) \cdot d")
     st.write("""
-    Esta fórmula te permite saltar directamente a cualquier posición sin pasar por todos los números anteriores. 
-    Es útil para saber, por ejemplo, cuál será el número en la posición 1,000.
+    Esta fórmula te permite saltar directamente a cualquier posición sin pasar por todos los números anteriores. Es útil para saber, por ejemplo, cuál será el valor en la posición 1,000.
     """)
 
 with col_f2:
-    st.info("**Para hallar la cantidad de términos ($n$):**")
+    st.info("**Cantidad de términos ($n$):**")
     st.latex(r"n = \frac{a_n - a_1}{d} + 1")
     st.write("""
-    Esta es la que usamos en este programa. Nos dice cuántos números existen entre el inicio y el final 
-    basándonos en la diferencia que elegiste.
+    Esta es la que usamos en este programa. Nos indica cuántos números existen exactamente entre el inicio y el final basándonos en la diferencia constante que hayas elegido.
+    """)
+
+# --- SEGUNDA FILA ---
+col_f3, col_f4 = st.columns(2)
+
+with col_f3:
+    st.info("**Suma de los n términos ($S_n$):**")
+    st.latex(r"S_n = \frac{(a_1 + a_n) \cdot n}{2}")
+    st.write("""
+    Permite calcular el total acumulado de todos los valores de la serie sin sumarlos uno por uno. Es una herramienta fundamental para proyecciones financieras y ahorro progresivo.
+    """)
+
+with col_f4:
+    st.info("**Diferencia Común ($d$):**")
+    st.latex(r"d = a_n - a_{n-1}")
+    st.write("""
+    Es el valor constante que se suma en cada paso de la sucesión. Se obtiene restando cualquier término menos el anterior y define si la progresión es creciente o decreciente.
+    """)
+
+# --- TERCERA FILA ---
+col_f5, col_f6 = st.columns(2)
+
+with col_f5:
+    st.info("**Media Aritmética:**")
+    st.latex(r"a_k = \frac{a_{k-1} + a_{k+1}}{2}")
+    st.write("""
+    Establece que cualquier término intermedio es el promedio exacto de sus vecinos inmediatos. Es una propiedad única que ayuda a validar la consistencia de toda la serie numérica.
+    """)
+
+with col_f6:
+    st.info("**Interpolación Lineal ($d$):**")
+    st.latex(r"d = \frac{b - a}{k + 1}")
+    st.write("""
+    Se usa para insertar una cantidad específica de números ($k$) entre dos extremos ($a$ y $b$). Calcula la diferencia necesaria para que todos los nuevos términos queden equitativos.
     """)
 
 st.divider() # Una línea para separar
