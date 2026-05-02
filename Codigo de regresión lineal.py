@@ -47,24 +47,49 @@ st.divider() # Una línea para separar
 
 st.markdown("<h3 style='color: #F0394D;'> Fórmulas clave para regresiones lineales</h3>", unsafe_allow_html=True)
 
+# --- FILA 1 ---
 col_f1, col_f2 = st.columns(2)
-
 with col_f1:
     st.error("**Ecuación de la Recta ($Y$):**")
     st.latex(r"Y = \beta_0 + \beta_1 X")
     st.write("""
-    Esta fórmula permite predecir el valor de Y para cualquier valor de X. Es muy 
-    útil para entender la tendencia de tus datos y proyectar resultados futuros 
-    basándose en la pendiente y el punto de corte.
+    Es la función lineal que representa la relación entre las variables. Permite predecir el valor de la variable dependiente para cualquier valor de la independiente.
+    """)
+with col_f2:
+    st.error("**Pendiente de la Recta ($\beta_1$):**")
+    st.latex(r"\beta_1 = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sum (x_i - \bar{x})^2}")
+    st.write("""
+    Indica la inclinación de la recta. Representa cuánto cambia la variable dependiente por cada unidad que aumenta la variable independiente en el modelo.
     """)
 
-with col_f2:
-    st.error("**Cálculo de la Pendiente (Beta 1):**")
-    st.latex(r"\beta_1 = \frac{\sum (x - \bar{x})(y - \bar{y})}{\sum (x - \bar{x})^2}")
+# --- FILA 2 ---
+col_f3, col_f4 = st.columns(2)
+with col_f3:
+    st.error("**Intercepto u Origen ($\beta_0$):**")
+    st.latex(r"\beta_0 = \bar{y} - \beta_1 \bar{x}")
     st.write("""
-    Esta es la que usamos para encontrar la inclinación de la recta. Nos dice 
-    cuánto aumenta o disminuye la variable dependiente por cada unidad que 
-    cambia la variable independiente elegida.
+    Es el valor donde la recta corta el eje vertical. Indica el punto de partida del modelo matemático cuando la variable independiente es igual a cero.
+    """)
+with col_f4:
+    st.error("**Coeficiente Determinación ($R^2$):**")
+    st.latex(r"R^2 = \frac{[\sum(x - \bar{x})(y - \bar{y})]^2}{\sum(x - \bar{x})^2 \sum(y - \bar{y})^2}")
+    st.write("""
+    Mide la calidad del ajuste. Un valor cercano a 1 indica que la recta explica casi perfectamente la relación de dependencia entre los puntos de datos analizados.
+    """)
+
+# --- FILA 3 ---
+col_f5, col_f6 = st.columns(2)
+with col_f5:
+    st.error("**Error Estándar ($S_{yx}$):**")
+    st.latex(r"S_{yx} = \sqrt{\frac{\sum(y_i - \hat{y}_i)^2}{n - 2}}")
+    st.write("""
+    Cuantifica la desviación promedio de los puntos respecto a la recta. Un error bajo garantiza que las predicciones del simulador sean estadísticamente confiables.
+    """)
+with col_f6:
+    st.error("**Covarianza ($S_{xy}$):**")
+    st.latex(r"S_{xy} = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{n - 1}")
+    st.write("""
+    Mide la dirección de la relación lineal. Si es positiva, ambas variables crecen juntas; si es negativa, una disminuye mientras la otra aumenta sistemáticamente.
     """)
 
 st.divider() # Una línea para separar
