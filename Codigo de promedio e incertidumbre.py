@@ -39,6 +39,8 @@ with col_text:
     Este programa calcula el **error aleatorio** y el **error total** combinado con la precisión del instrumento. Es una herramienta vital en ingeniería para márgenes de seguridad, en medicina para dosis críticas y en control de calidad para validar resultados de laboratorio.
     """)
 
+st.divider() # Una línea para separar
+
 st.markdown("<h3 style='color: #28a745;'>Fórmulas Clave para promedios y incertidumbres</h3>", unsafe_allow_html=True)
 
 # --- PRIMERA FILA DE FÓRMULAS ---
@@ -82,6 +84,7 @@ with col_f4:
     apreciación del instrumento ($e_i$) mediante cuadratura, entregando el 
     margen de error absoluto que se debe reportar en el informe.
     """)
+
 def calcular_incertidumbre(mediciones, inc_instrumental):
     n = len(mediciones)
     
@@ -98,7 +101,7 @@ def calcular_incertidumbre(mediciones, inc_instrumental):
     error_total = np.sqrt(error_aleatorio**2 + inc_instrumental**2)
     
     return promedio, error_aleatorio, error_total
-    
+
 
 # Ejemplo de uso con tus inputs de Streamlit:
 # prom, err_a, err_t = calcular_incertidumbre(lista_de_datos, instrumento)
