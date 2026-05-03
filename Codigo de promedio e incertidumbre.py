@@ -43,46 +43,49 @@ st.divider() # Una línea para separar
 
 st.markdown("<h3 style='color: #28a745;'>Fórmulas Clave para promedios y incertidumbres</h3>", unsafe_allow_html=True)
 
-# --- PRIMERA FILA DE FÓRMULAS ---
+# --- FILA 1 ---
 col_f1, col_f2 = st.columns(2)
-
 with col_f1:
-    st.success("**Valor Promedio ($\overline{x}$):**")
-    st.latex(r"\overline{x} = \frac{\sum_{i=1}^{n} x_i}{n}")
+    st.error("**Ecuación de la Recta ($Y$):**")
+    st.latex(r"Y = \beta_0 + \beta_1 X")
     st.write("""
-    Es la media aritmética de todas tus mediciones. Representa el valor más probable 
-    dentro del conjunto de datos y sirve como base central para el cálculo de 
-    cualquier tipo de desviación o error posterior.
+    Es la función lineal que representa la relación entre las variables. Permite predecir el valor de la variable dependiente para cualquier valor de la independiente.
     """)
-
 with col_f2:
-    st.success("**Desviación Estándar ($s$):**")
-    st.latex(r"s = \sqrt{\frac{\sum (x_i - \overline{x})^2}{n-1}}")
+    st.error("**Pendiente de la Recta ($\beta_1$):**")
+    st.latex(r"\beta_1 = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sum (x_i - \bar{x})^2}")
     st.write("""
-    Mide qué tan alejados están los datos respecto al promedio. Una desviación 
-    baja indica que los datos están muy agrupados (alta precisión), mientras 
-    que una alta sugiere gran dispersión en las medidas tomadas.
+    Indica la inclinación de la recta. Representa cuánto cambia la variable dependiente por cada unidad que aumenta la variable independiente en el modelo.
     """)
 
-# --- SEGUNDA FILA DE FÓRMULAS ---
+# --- FILA 2 ---
 col_f3, col_f4 = st.columns(2)
-
 with col_f3:
-    st.success("**Error Aleatorio ($e_a$):**")
-    st.latex(r"e_a = \frac{s}{\sqrt{n}}")
+    st.error("**Intercepto u Origen ($\beta_0$):**")
+    st.latex(r"\beta_0 = \bar{y} - \beta_1 \bar{x}")
     st.write("""
-    También llamado error de la media, cuantifica la incertidumbre debida a 
-    factores ambientales o humanos. Disminuye a medida que aumentas el número 
-    de mediciones ($n$), mejorando la confianza del experimento.
+    Es el valor donde la recta corta el eje vertical. Indica el punto de partida del modelo matemático cuando la variable independiente es igual a cero.
+    """)
+with col_f4:
+    st.error("**Coeficiente Determinación ($R^2$):**")
+    st.latex(r"R^2 = \frac{[\sum(x - \bar{x})(y - \bar{y})]^2}{\sum(x - \bar{x})^2 \sum(y - \bar{y})^2}")
+    st.write("""
+    Mide la calidad del ajuste. Un valor cercano a 1 indica que la recta explica casi perfectamente la relación de dependencia entre los puntos de datos analizados.
     """)
 
-with col_f4:
-    st.success("**Error Total Combinado ($e_t$):**")
-    st.latex(r"e_t = \sqrt{e_a^2 + e_i^2}")
+# --- FILA 3 ---
+col_f5, col_f6 = st.columns(2)
+with col_f5:
+    st.error("**Error Estándar ($S_{yx}$):**")
+    st.latex(r"S_{yx} = \sqrt{\frac{\sum(y_i - \hat{y}_i)^2}{n - 2}}")
     st.write("""
-    Es la incertidumbre final del proceso. Combina el error aleatorio con la 
-    apreciación del instrumento ($e_i$) mediante cuadratura, entregando el 
-    margen de error absoluto que se debe reportar en el informe.
+    Cuantifica la desviación promedio de los puntos respecto a la recta. Un error bajo garantiza que las predicciones del simulador sean estadísticamente confiables.
+    """)
+with col_f6:
+    st.error("**Covarianza ($S_{xy}$):**")
+    st.latex(r"S_{xy} = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{n - 1}")
+    st.write("""
+    Mide la dirección de la relación lineal. Si es positiva, ambas variables crecen juntas; si es negativa, una disminuye mientras la otra aumenta sistemáticamente.
     """)
 
 def calcular_incertidumbre(mediciones, inc_instrumental):
