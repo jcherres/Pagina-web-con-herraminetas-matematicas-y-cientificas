@@ -88,23 +88,98 @@ with col_f6:
     Es el error relativo expresado en porcentaje. Es la forma estándar de reportar la calidad y precisión de un experimento en informes técnicos y artículos de investigación.
     """)
 
-def calcular_incertidumbre(mediciones, inc_instrumental):
+st.divider() # Una línea para separar
+
+st.markdown("""
+    <style>
+    /* Etiquetas en verde */
+    label p { color: #00FF00 !important; font-weight: bold !important; }
+    
+    /* DISEÑO DE BARRAS: Solo en el cuerpo gris, botones fuera */
+    .stNumberInput > div > div > div:first-child, 
+    .stTextInput > div > div {
+        border-left: 3px solid #000000 !important;
+        border-right: 3px solid #000000 !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        background-color:  !important;
+        border-radius: 0px !important;
+    }
+
+    /* Limpieza total de bordes de Streamlit */
+    [data-testid="stNumberInputContainer"], [data-testid="stTextInputContainer"] {
+        border: none !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .stNumberInput input, .stTextInput input {
+        border: none !important;
+        background-color: transparent !important;
+        font-weight: bold !important;
+    }
+
+    /* Botones invisibles y fuera de las barras */
+    button[data-testid="stNumberInputStepDown"], 
+    button[data-testid="stNumberInputStepUp"] {
+        border: none !important;
+        background-color: transparent !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+
+st.markdown("<h3 style='color: #000000;'>Simulador de promedio y incertidumbre</h3>", unsafe_allow_html=True)
+
+
+
+def calcular_promedio_e_incertidumbre(mediciones, inc_instrumental):
+    # Validamos que haya al menos dos datos para calcular desviación
+    if len(mediciones) < 2:
+        return None
+    
     n = len(mediciones)
-    
-    # 1. Valor promedio
     promedio = np.mean(mediciones)
-    
-    # 2. Desviación estándar muestral (s)
     desviacion = np.std(mediciones, ddof=1)
-    
-    # 3. Error aleatorio (Incertidumbre estadística)
     error_aleatorio = desviacion / np.sqrt(n)
     
-    # 4. Error total (Combinación por cuadratura)
+    # Combinación por cuadratura
     error_total = np.sqrt(error_aleatorio**2 + inc_instrumental**2)
+    error_relativo = error_total / abs(promedio) if promedio != 0 else 0
+    error_porcentual = error_relativo * 100
+
+    return {
+        "prom": promedio,
+        "err_a": error_aleatorio,
+        "err_t": error_total,
+        "err_r": error_relativo,
+        "err_p": error_porcentual
+    }
+
+# --- INPUTS PARA PROMEDIO E INCERTIDUMBRE ---
+
+datos_usuario = st.text_input("Ingrese las mediciones (ej: 10.2, 10.5, 10.1):", value="10.0, 10.1")
+inc_instrumental = st.number_input("Ingrese la incertidumbre del instrumento (Apreciación):", value=0.01, format="%.4f")
+unidad = st.text_input("¿En qué unidad se midieron los datos? (ej: m, kg, s):")
+
+# Convertir los datos a lista de números de forma segura
+try:
+    datos = [float(x.strip()) for x in datos_usuario.split(",") if x.strip()]
+except ValueError:
+    st.error("Por favor, ingrese solo números separados por comas.")
+    datos = []
+
+if len(datos) >= 2:
+    res = calcular_promedio_e_incertidumbre(datos, inc_instrumental)
     
-    return promedio, error_aleatorio, error_total
-
-
-# Ejemplo de uso con tus inputs de Streamlit:
-# prom, err_a, err_t = calcular_incertidumbre(lista_de_datos, instrumento)
+    st.markdown("<h4 style='color: #000000;'>El resultado final es:</h4>", unsafe_allow_html=True)
+    
+    # Formateamos el texto para que salga: Valor ± Incertidumbre Unidad
+    texto_resultado = f"{res['prom']:.4f} ± {res['err_t']:.4f} {unidad}"
+    
+    st.markdown(f"<p class='resultado-texto'>{texto_resultado}</p>", unsafe_allow_html=True)
+    
+    # Opcional: Mostrar los otros errores abajo en pequeño
+    st.write(f"**Error Relativo:** {res['err_r']:.4f} | **Error Porcentual:** {res['err_p']:.2f}%")
+else:
+    st.warning("Se necesitan al menos 2 mediciones para realizar el cálculo estadístico.")
